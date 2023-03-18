@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Kernel;
+use Carbon\CarbonInterval;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Events\QueryExecuted;
@@ -31,9 +33,15 @@ class AppServiceProvider extends ServiceProvider
 
         //Сообщит, если запрос (один имеется ввиду) к базе дольше чем указанное количество миллисекунд
         DB::whenQueryingForLongerThan(500, function (Connection $connection, QueryExecuted $event) {
-            // TODO 3th lesson сообщение в телеграм
+            logger()->channel('telegram')->debug('whenQueryingForLongerThan' . $connection->query()->toSql());
         });
 
-        // TODO 3th lesson request cycle
+        $kernel = app(Kernel::class);
+        $kernel->whenRequestLifecycleIsLongerThan(
+            CarbonInterval::seconds(4),
+            function (){
+                logger()->channel('telegram')->debug('whenRequestLifecycleIsLongerThan' . request()->url());
+            }
+        );
     }
 }
