@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
 
         //Сообщит, если запрос (один имеется ввиду) к базе дольше чем указанное количество миллисекунд
         DB::whenQueryingForLongerThan(500, function (Connection $connection, QueryExecuted $event) {
-            logger()->channel('telegram')->debug('whenQueryingForLongerThan' . $connection->query()->toSql());
+            logger()->channel('telegram')->debug('Метод: whenQueryingForLongerThan, вызвал это исключение, так как запрос к базе дольше чем указанное количество миллисекунд. Сам запрос: ' . $connection->query()->toSql());
         });
 
         $kernel = app(Kernel::class);
