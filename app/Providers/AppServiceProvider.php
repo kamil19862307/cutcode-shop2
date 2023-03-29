@@ -26,22 +26,39 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //Выдаст exeption, если мы гдо-то забудем игрлоды (Eager loader)
-        Model::preventLazyLoading(!app()->isProduction());
-
         //Выдаст exeption, если будем сохранять какое либо поле которого нет в свойстве $fillable[]
-        Model::preventSilentlyDiscardingAttributes(!app()->isProduction());
+        Model::shouldBeStrict(!app()->isProduction());
 
-        //Сообщит, если запрос (один имеется ввиду) к базе дольше чем указанное количество миллисекунд
-        DB::whenQueryingForLongerThan(500, function (Connection $connection, QueryExecuted $event) {
-            logger()->channel('telegram')->debug('Метод: whenQueryingForLongerThan, вызвал это исключение, так как запрос к базе дольше чем указанное количество миллисекунд. Сам запрос: ' . $connection->query()->toSql());
-        });
+//        Model::preventSilentlyDiscardingAttributes(!app()->isProduction());
 
-        $kernel = app(Kernel::class);
-        $kernel->whenRequestLifecycleIsLongerThan(
-            CarbonInterval::seconds(4),
-            function (){
-                logger()->channel('telegram')->debug('whenRequestLifecycleIsLongerThan' . request()->url());
-            }
-        );
+        if (app()->isProduction()) {
+            //Это в целом коннект - от его открытия до его завершения (уберём)
+             DB::whenQueryingForLongerThan(CarbonInterval::seconds(5), function (Connection $connection) {
+                 logger()
+                      ->channel('telegram')
+                      ->debug('Метод: whenQueryingForLongerThan, вызвал это исключение: ' . $connection->totalQueryDuration());
+                 });
+
+            //Сообщит, если запрос (один имеется ввиду) к базе дольше чем указанное количество миллисекунд
+            DB::listen(function ($query) {
+            // $query->sql;
+            // $query->bindings;
+            // $query->time;
+
+                if ($query->time > 500) {
+                    logger()
+                        ->channel('telegram')
+                        ->debug('DB::listen - запрос загулял: ' . $query->sql, $query->bindings);
+                }
+            });
+
+            $kernel = app(Kernel::class);
+            $kernel->whenRequestLifecycleIsLongerThan(
+                CarbonInterval::seconds(4),
+                function () {
+                    logger()->channel('telegram')->debug('whenRequestLifecycleIsLongerThan' . request()->url());
+                }
+            );
+        }
     }
 }
