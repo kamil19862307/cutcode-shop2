@@ -33,11 +33,11 @@ class AppServiceProvider extends ServiceProvider
 
         if (app()->isProduction()) {
             //Это в целом коннект - от его открытия до его завершения (уберём)
-             DB::whenQueryingForLongerThan(CarbonInterval::seconds(5), function (Connection $connection) {
-                 logger()
-                      ->channel('telegram')
-                      ->debug('Метод: whenQueryingForLongerThan, вызвал это исключение: ' . $connection->totalQueryDuration());
-                 });
+//             DB::whenQueryingForLongerThan(CarbonInterval::seconds(5), function (Connection $connection) {
+//                 logger()
+//                      ->channel('telegram')
+//                      ->debug('Метод: whenQueryingForLongerThan, вызвал это исключение: ' . $connection->totalQueryDuration());
+//                 });
 
             //Сообщит, если запрос (один имеется ввиду) к базе дольше чем указанное количество миллисекунд
             DB::listen(function ($query) {
@@ -45,15 +45,14 @@ class AppServiceProvider extends ServiceProvider
             // $query->bindings;
             // $query->time;
 
-                if ($query->time > 500) {
+                if ($query->time > 100) {
                     logger()
                         ->channel('telegram')
-                        ->debug('DB::listen - запрос загулял: ' . $query->sql, $query->bindings);
+                        ->debug('DB::listen - запрос дольше указанного времени: ' . $query->sql, $query->bindings);
                 }
             });
 
-            $kernel = app(Kernel::class);
-            $kernel->whenRequestLifecycleIsLongerThan(
+            app(Kernel::class)->whenRequestLifecycleIsLongerThan(
                 CarbonInterval::seconds(4),
                 function () {
                     logger()->channel('telegram')->debug('whenRequestLifecycleIsLongerThan' . request()->url());
