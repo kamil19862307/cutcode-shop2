@@ -21,7 +21,11 @@ class ProductFactory extends Factory
         return [
             'title' => ucfirst(fake()->words(2, true)),
             'brand_id' => Brand::query()->inRandomOrder()->value('id'),
-            'thumbnail' => '',
+            'thumbnail' => fake()->file(
+                base_path('/tests/Fixtures/images/products'),
+                storage_path('/app/public/images/products'),
+                false
+            ),
             'price' => fake()->numberBetween(1000, 100000),
         ];
     }
