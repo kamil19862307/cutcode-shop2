@@ -38,10 +38,14 @@ class AuthController extends Controller
         $status = Password::sendResetLink(
             $request->only('email')
         );
-        // TODO 3th lesson сделать отдельный клас для флеш и для сообщения
-        return $status === Password::RESET_LINK_SENT
-            ? back()->with(['message' => __($status)])
-            : back()->withErrors(['email' => __($status)]);
+
+        if($status === Password::RESET_LINK_SENT){
+            flash()->info(__($status));
+
+            return back();
+        }
+
+        return back()->withErrors(['email' => __($status)]);
     }
 
     public function reset(string $token): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
@@ -66,9 +70,12 @@ class AuthController extends Controller
             }
         );
 
-        return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('message', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
+        if($status === Password::PASSWORD_RESET){
+            flash()->info(__($status));
+
+            return back();
+        }
+        return redirect()->route('login')->withErrors(['email' => __($status)]);
     }
 
     public function signIn(SingInFormRequest $request): RedirectResponse

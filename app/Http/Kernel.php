@@ -30,7 +30,8 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':global',
+//            TODO на продакшене включить обратно (Часто выходит ошибка 429 too many requests)
+//            \Illuminate\Routing\Middleware\ThrottleRequests::class.':global',
 //            'throttle:global',
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
@@ -42,8 +43,8 @@ class Kernel extends HttpKernel
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+//            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+//            \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
 
