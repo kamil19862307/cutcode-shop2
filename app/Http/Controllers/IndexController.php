@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Telegram\Exceptions\TelegramBotApiException;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class IndexController extends Controller
