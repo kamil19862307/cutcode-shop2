@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,11 +12,7 @@
 </head>
 <body class="antialiased">
 
-    @if($message = flash()->get())
-        <div class="{{ $message->class() }} p-5">
-            {{ $message->message() }}
-        </div>
-    @endif
+    @include('shared.flash')
 
 <main class="md:min-h-screen md:flex md:items-center md:justify-center py-16 lg:py-20">
     <div class="container">
