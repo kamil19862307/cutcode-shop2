@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\View\Components\NavigationComposer;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,5 +24,6 @@ class ViewServiceProvider extends ServiceProvider
     {
         Vite::macro('image', fn($asset) => $this->asset("resources/images/$asset"));
 
+        View::composer('*', NavigationComposer::class);
     }
 }
