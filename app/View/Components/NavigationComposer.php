@@ -17,5 +17,4 @@ class NavigationComposer
         $view->with('menu', $menu);
 
     }
-
 }

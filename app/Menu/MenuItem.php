@@ -25,7 +25,7 @@ class MenuItem
         return $this->label;
     }
 
-    public function isActive()
+    public function isActive(): bool
     {
         $path = parse_url($this->link(), PHP_URL_PATH) ?? '/';
 
