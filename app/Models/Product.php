@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Pipeline\Pipeline;
 use Laravel\Scout\Attributes\SearchUsingFullText;
-use Laravel\Scout\Attributes\SearchUsingPrefix;
+//use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Searchable;
 use Support\Casts\PriceCast;
 use Support\Traits\Models\HasSlug;
@@ -91,5 +91,16 @@ class Product extends Model
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function properties(): BelongsToMany
+    {
+        return $this->belongsToMany(Property::class)
+            ->withPivot('value');
+    }
+
+    public function optionValues()
+    {
+        return $this->belongsToMany(OptionValue::class);
     }
 }

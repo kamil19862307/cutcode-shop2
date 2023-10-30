@@ -20,7 +20,7 @@ abstract class AbstractFilter implements Stringable
     // Ключ filters['price'], filters['brands']
     abstract public function key(): string;
 
-    // Когда и какой применять фильтр
+    // Сам запрос
     abstract public function apply(Builder $query): Builder;
 
     // Значения
