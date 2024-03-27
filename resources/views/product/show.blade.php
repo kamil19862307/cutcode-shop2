@@ -67,8 +67,9 @@
                             @endforeach
                         </ul>
 
-                        <!-- Product Options -->
-                        <form class="space-y-8 mt-8">
+                        <!-- Add To Cart, Product Options  -->
+                        <form method="POST" action="{{ route('cart.add', $product) }}" class="space-y-8 mt-8">
+                            @csrf
                             <div class="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4">
                                 @foreach($options as $option => $values)
                                     <div class="flex flex-col gap-2">
@@ -76,7 +77,7 @@
                                             {{ $option }}
                                         </label>
 
-                                        <select id="filter-item-1" class="form-select w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition">
+                                        <select name="options[]" id="filter-item-1" class="form-select w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition">
                                             @foreach($values as $value)
                                                 <option value="{{ $value->id }}" class="text-dark">
                                                     {{ $value->title }}
@@ -96,6 +97,7 @@
                                             -
                                     </button>
                                     <input
+                                        name="quantity"
                                         type="number"
                                         placeholder="К-во"
                                         min="1"
