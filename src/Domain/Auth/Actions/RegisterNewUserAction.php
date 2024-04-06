@@ -6,6 +6,7 @@ use Domain\Auth\Contracts\RegisterNewUserContract;
 use Domain\Auth\DTOs\NewUserDTO;
 use Domain\Auth\Models\User;
 use Illuminate\Auth\Events\Registered;
+use Support\SessionRegenerator;
 
 class RegisterNewUserAction implements RegisterNewUserContract
 {
@@ -21,6 +22,9 @@ class RegisterNewUserAction implements RegisterNewUserContract
 //        В app/Providers/EventServiceProvider.php закомментировал   //SendEmailVerificationNotification::class,
 //        пока по этому эвенту ничего отправлять не будем
 
-        auth()->login($user);
+        // Сохраняем корзину, если новый пользователь регистрируется на сайте.
+        SessionRegenerator::run(fn() => auth()->login($user));
+
+
     }
 }

@@ -46,7 +46,13 @@ class CartManager
             $data['user_id'] = auth()->id();
 
         return $data;
+    }
 
+    public function updateStorageId(string $old, string $current): void
+    {
+        Cart::query()
+            ->where('storage_id', $old)
+            ->update($this->storedData($current));
     }
 
     private function stringedOptionValues(array $optionValues = []): string
