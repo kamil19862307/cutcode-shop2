@@ -36,7 +36,6 @@ class CartManager
     public function storedData(string $id): array
     {
         // По умолчанию массив со сторейдж айди
-
         $data = [
             'storage_id' => $id
         ];
@@ -95,8 +94,6 @@ class CartManager
 
     public function quantity(CartItem $item, int $quantity = 1): void
     {
-
-
         $item->update([
             'quantity' => $quantity
         ]);
