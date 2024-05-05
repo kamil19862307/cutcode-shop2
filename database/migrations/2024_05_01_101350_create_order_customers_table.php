@@ -20,10 +20,10 @@ return new class extends Migration
             $table->string('last_name')
                 ->nullable();
 
-            $table->string('phone')
+            $table->string('email')
                 ->nullable();
 
-            $table->string('email')
+            $table->string('phone')
                 ->nullable();
 
             $table->string('city')

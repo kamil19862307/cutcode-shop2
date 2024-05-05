@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\OptionValue;
 use App\Models\Product;
 use Domain\Order\Models\Order;
+use Domain\Order\Models\OrderItem;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -33,12 +35,12 @@ return new class extends Migration
         Schema::create('order_item_option_value', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignIdFor(\Domain\Order\Models\OrderItem::class)
+            $table->foreignIdFor(OrderItem::class)
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
-            $table->foreignIdFor(\App\Models\OptionValue::class)
+            $table->foreignIdFor(OptionValue::class)
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
