@@ -44,7 +44,7 @@
                                             <img src="{{ $item->product->makeThumbnail('345x320') }}" class="object-cover w-full h-full" alt="{{ $item->product->title }}">
                                         </div>
                                         <div class="py-3">
-                                            <h4 class="text-xs sm:text-sm xl:text-md font-bold"><a href="product.html" class="inline-block text-white hover:text-pink">{{ $item->product->title }}</a></h4>
+                                            <h4 class="text-xs sm:text-sm xl:text-md font-bold"><a href="{{ route('product', $item->product->slug) }}" class="inline-block text-white hover:text-pink">{{ $item->product->title }}</a></h4>
                                             @if($item->optionValues->isNotEmpty())
                                                 <ul class="space-y-1 mt-2 text-xs">
                                                     @foreach($item->optionValues as $value)
@@ -116,7 +116,7 @@
                 </div>
                 <div class="flex flex-col sm:flex-row lg:justify-end gap-4">
                     <a href="{{ route('catalog') }}" class="btn btn-pink">За покупками</a>
-                    <a href="checkout.html" class="btn btn-purple">Оформить заказ</a>
+                    <a href="{{ route('order') }}" class="btn btn-purple">Оформить заказ</a>
                 </div>
             </div>
         @endif

@@ -24,7 +24,7 @@
                     <x-forms.text-input
                         name="customer[first_name]"
                         type="text"
-                        palaceholder="Имя"
+                        placeholder="Имя"
                         value="{{ old('customer.first_name') }}"
                     >
                     </x-forms.text-input>
@@ -38,7 +38,7 @@
                     <x-forms.text-input
                         name="customer[last_name]"
                         type="text"
-                        palaceholder="Фамилия"
+                        placeholder="Фамилия"
                         value="{{ old('customer.last_name') }}"
                     >
                     </x-forms.text-input>
@@ -52,7 +52,7 @@
                     <x-forms.text-input
                         name="customer[email]"
                         type="text"
-                        palaceholder="Email"
+                        placeholder="Email"
                         value="{{ old('customer.email') }}"
                     >
                     </x-forms.text-input>
@@ -66,7 +66,7 @@
                     <x-forms.text-input
                         name="customer[phone]"
                         type="text"
-                        palaceholder="Phone"
+                        placeholder="Phone"
                         value="{{ old('customer.phone') }}"
                     >
                     </x-forms.text-input>
@@ -155,7 +155,7 @@
                                     <x-forms.text-input
                                         namme="customer[city]"
                                         type="text"
-                                        palceholder="Город"
+                                        placeholder="Город"
                                         value="{{ old('customer.city') }}"
                                         :isError="$errors->has('customer.city')">
                                     </x-forms.text-input>
@@ -169,7 +169,7 @@
                                     <x-forms.text-input
                                         namme="customer[address]"
                                         type="text"
-                                        palceholder="Адрес"
+                                        placeholder="Адрес"
                                         value="{{ old('customer.address') }}"
                                         :isError="$errors->has('customer.address')">
                                     </x-forms.text-input>

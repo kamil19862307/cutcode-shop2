@@ -35,8 +35,11 @@ class Order extends Model
 
     public function status(): Attribute
     {
-        #TODO проверить енам OrderStatuses
         return Attribute::make(
+            // Гет и стрелочная функция в которой текущее значение нашего стейта статус, и далее
+            // идём от нашего енама OrderStatuses. Тоесть мы енам создаём из значения из OrderStatuses енама.
+            // Тем самым мы создали каст, который в себе в рамках модели таит енам, но нам нужен стейт.
+            // Поэтому далеевызываем createState и передаём себя ($this) текущий заказ
             get: fn(string $value) => OrderStatuses::from($value)->createState($this)
         );
     }
