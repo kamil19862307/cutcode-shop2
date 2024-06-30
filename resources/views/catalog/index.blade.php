@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $category->title ?? 'Каталог')
+{{--@section('title', $seo_title ?? 'Каталог')--}}
 
 @section('content')
 <!-- Breadcrumbs -->

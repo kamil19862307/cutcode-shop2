@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\SeoMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -30,7 +31,7 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-//            TODO на продакшене включить обратно (Часто выходит ошибка 429 too many requests)
+//            # TODO на продакшене включить обратно (Часто выходит ошибка 429 too many requests)
 //            \Illuminate\Routing\Middleware\ThrottleRequests::class.':global',
 //            'throttle:global',
             \App\Http\Middleware\EncryptCookies::class,
@@ -39,6 +40,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            SeoMiddleware::class
         ],
 
         'api' => [

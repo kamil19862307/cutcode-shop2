@@ -3,7 +3,7 @@
 namespace Domain\Order\Processes;
 
 use Domain\Order\Contracts\OrderProcessContract;
-use Domain\Order\Exeptions\OrderProcessException;
+use Domain\Order\Exceptions\OrderProcessException;
 use Domain\Order\Models\Order;
 
 class CheckProductQuantities implements OrderProcessContract
