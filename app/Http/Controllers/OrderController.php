@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderFormRequest;
+use Domain\DTOs\OrderCustomerDTO;
+use Domain\DTOs\OrderDTO;
 use Domain\Order\Actions\NewOrderAction;
 use Domain\Order\Models\DeliveryType;
 use Domain\Order\Models\PaymentMethod;
@@ -46,7 +48,13 @@ class OrderController extends Controller
      */
     public function handle(OrderFormRequest $request, NewOrderAction $action): RedirectResponse
     {
-        $order = $action($request);
+//        $order = $action($request);
+
+        $order = $action(
+            OrderDTO::make(...$request->only(['payment_method_id', 'delivery_type_id', 'password'])),
+            OrderCustomerDTO::fromArray($request->get('customer')),
+            $request->boolean('create_account')
+        );
 
         (new OrderProcess($order))->processes([
             // Процессы в ходе оформления заказа

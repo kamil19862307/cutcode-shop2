@@ -13,6 +13,9 @@ use Support\Casts\PriceCast;
 use Domain\Order\Enums\OrderStatuses;
 
 
+/**
+ * @method Order query()
+ */
 class Order extends Model
 {
     use HasFactory;
@@ -29,6 +32,9 @@ class Order extends Model
         'amount' => PriceCast::class
     ];
 
+    /**
+     * @var string[]
+     */
     protected $attributes = [
         'status' => 'new'
     ];
